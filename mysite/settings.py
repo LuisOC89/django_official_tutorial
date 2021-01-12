@@ -27,9 +27,9 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 #TODO: When False django admin is not formatted, make this dependable on env.
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
-THIRD_PARTY_APPS = ['polls.apps.PollsConfig']
+THIRD_PARTY_APPS = ['polls.apps.PollsConfig', 'rest_framework']
 
 # Application definition
 
@@ -124,3 +124,9 @@ STATIC_URL = '/static/'
 
 # To see admin with CSS format
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

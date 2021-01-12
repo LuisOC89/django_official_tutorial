@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "1a84dd72-fd96-4e89-a360-e7a32c035a27",
+		"name": "Django & restframework tutorials",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "475cbf59-bb93-44b0-863c-40b4578a22f2",
+						"exec": [
+							"// Require the crypto-js module",
+							"var CryptoJS = require(\"crypto-js\");",
+							"",
+							"// Get username and password from env vars",
+							"let username = pm.environment.get('DJ_ADMIN_USER');",
+							"let password = pm.environment.get('DJ_ADMIN_PASS');",
+							"",
+							"if (username && password) {",
+							"    // Parse the `username` and `password` environment variables",
+							"    let credsParsed = CryptoJS.enc.Utf8.parse(`${username}:${password}`);",
+							"",
+							"    // Base64 encoded the parsed value",
+							"    let credsEncoded = CryptoJS.enc.Base64.stringify(credsParsed);",
+							"",
+							"    // Set the valuse as an environment variable and use in the request",
+							"    pm.environment.set('TOKEN', 'Basic ' + credsEncoded);",
+							"} else {",
+							"    console.log(\"Either username or password is/are missing.\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DJ_TUT_URL}}/users/",
+					"host": [
+						"{{DJ_TUT_URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
